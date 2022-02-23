@@ -21,8 +21,10 @@ resource "aws_iam_role" "cloudwatch_to_firehose" {
         Principal = {
           Service = "logs.${data.aws_region.current.name}.amazonaws.com"
         },
-        "Condition" : {
-          "StringLike" : { "aws:SourceArn" : data.aws_cloudwatch_log_group.subscriptions[*].arn }
+        Condition = {
+          StringLike = {
+            for subscription in data.aws_cloudwatch_log_group.subscriptions : "aws:SourceArn" => subscription.arn...
+          }
         }
       }
     ]
