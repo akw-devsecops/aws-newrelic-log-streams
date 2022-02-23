@@ -23,7 +23,7 @@ resource "aws_iam_role" "cloudwatch_to_firehose" {
         },
         Condition = {
           StringLike = {
-            for subscription in data.aws_cloudwatch_log_group.subscriptions : "aws:SourceArn" => subscription.arn...
+            "aws:SourceArn" = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
           }
         }
       }
