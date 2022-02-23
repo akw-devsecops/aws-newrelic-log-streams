@@ -47,3 +47,8 @@ resource "aws_iam_policy" "cloudwatch_to_firehose" {
     }
   )
 }
+
+resource "aws_iam_role_policy_attachment" "cloudwatch_to_firehose" {
+  policy_arn = aws_iam_policy.cloudwatch_to_firehose.arn
+  role       = aws_iam_role.cloudwatch_to_firehose.name
+}
