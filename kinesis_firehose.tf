@@ -9,7 +9,7 @@ resource "aws_kinesis_firehose_delivery_stream" "newrelic_stream" {
   }
 
   http_endpoint_configuration {
-    name               = "New Relic Logs"
+    name               = "New Relic"
     url                = "https://aws-api.newrelic.com/firehose/v1"
     access_key         = var.nr_license_key
     role_arn           = aws_iam_role.newrelic_firehose_s3access.arn
