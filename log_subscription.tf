@@ -39,9 +39,14 @@ resource "aws_iam_policy" "cloudwatch_to_firehose" {
       Version = "2012-10-17",
       Statement = [
         {
-          Effect   = "Allow",
-          Action   = "kinesis:PutRecord",
-          Resource = aws_kinesis_firehose_delivery_stream.newrelic_log_stream.arn
+          Effect = "Allow",
+          Action = [
+            "firehose:PutRecord",
+            "firehose:PutRecordBatch"
+          ]
+          Resource = [
+            aws_kinesis_firehose_delivery_stream.newrelic_log_stream.arn
+          ]
         }
       ]
     }
