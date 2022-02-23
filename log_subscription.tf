@@ -13,13 +13,13 @@ resource "aws_iam_role" "cloudwatch_to_firehose" {
   description = "Role to allow a metric stream put metrics into a firehose"
 
   assume_role_policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
+    Version = "2012-10-17",
+    Statement = [
       {
-        "Effect" : "Allow",
-        "Action" : "sts:AssumeRole",
-        "Principal" : {
-          "Service" : "logs.${data.aws_region.current.name}.amazonaws.com"
+        Effect = "Allow",
+        Action = "sts:AssumeRole",
+        Principal = {
+          Service = "logs.${data.aws_region.current.name}.amazonaws.com"
         },
         "Condition" : {
           "StringLike" : { "aws:SourceArn" : data.aws_cloudwatch_log_group.subscriptions[*].arn }
@@ -34,12 +34,12 @@ resource "aws_iam_role" "cloudwatch_to_firehose" {
 resource "aws_iam_policy" "cloudwatch_to_firehose" {
   policy = jsonencode(
     {
-      "Version" : "2012-10-17",
-      "Statement" : [
+      Version = "2012-10-17",
+      Statement = [
         {
-          "Effect" : "Allow",
-          "Action" : "kinesis:PutRecord",
-          "Resource" : aws_kinesis_firehose_delivery_stream.newrelic_log_stream.arn
+          Effect   = "Allow",
+          Action   = "kinesis:PutRecord",
+          Resource = aws_kinesis_firehose_delivery_stream.newrelic_log_stream.arn
         }
       ]
     }
