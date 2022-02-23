@@ -1,0 +1,26 @@
+pipeline {
+    agent { label 'jenkins-infra-agent' }
+    stages {
+        stage('Terraform') {
+            steps {
+                sh 'terraform init'
+                sh 'terraform version'
+                sh 'terraform validate'
+            }
+        }
+        stage('Test Default') {
+            steps {
+                dir('examples/') {
+                    sh 'terraform init'
+                }
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh "sonar-scanner -Dsonar.projectKey=TM_aws-newrelic-log-streams"
+                }
+            }
+        }
+    }
+}
