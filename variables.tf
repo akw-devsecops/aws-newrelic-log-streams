@@ -8,6 +8,12 @@ variable "nr_license_key" {
   description = "The NewRelic ingest license key."
 }
 
+variable "log_group_subscriptions" {
+  type        = set(string)
+  description = "List of log groups to subscribe."
+  default     = []
+}
+
 variable "tags" {
   type = map(string)
 }

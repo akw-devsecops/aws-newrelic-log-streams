@@ -1,4 +1,4 @@
-resource "aws_kinesis_firehose_delivery_stream" "newrelic_stream" {
+resource "aws_kinesis_firehose_delivery_stream" "newrelic_log_stream" {
   name        = "TF-NewRelic-Log-Delivery-Stream"
   destination = "http_endpoint"
 
@@ -27,7 +27,7 @@ resource "aws_kinesis_firehose_delivery_stream" "newrelic_stream" {
 }
 
 resource "aws_iam_role" "newrelic_firehose_s3access" {
-  name        = "TF-NewRelic-Log-Delivery-Stream-${data.aws_region.current.name}"
+  name        = "TF-NewRelic-Log-Delivery-S3-Error-${data.aws_region.current.name}"
   description = "Role to allow firehose stream put events into S3 backup bucket"
 
   assume_role_policy = jsonencode({
