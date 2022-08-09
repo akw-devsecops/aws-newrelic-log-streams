@@ -80,9 +80,13 @@ resource "aws_iam_role_policy_attachment" "newrelic_firehose_s3access" {
 
 resource "aws_s3_bucket" "newrelic_firehose_events" {
   bucket = "tf-newrelic-firehose-log-${data.aws_region.current.name}-${var.nr_account}-${data.aws_caller_identity.current.account_id}"
-  acl    = "private"
 
   tags = var.tags
+}
+
+resource "aws_s3_bucket_acl" "newrelic_firehose_events_private" {
+  bucket = aws_s3_bucket.newrelic_firehose_events.id
+  acl    = "private"
 }
 
 resource "aws_s3_bucket_public_access_block" "newrelic_firehose_events" {
